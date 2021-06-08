@@ -16,4 +16,8 @@
     <Folder Include="Extensions\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\STP.Business\STP.Business.csproj" />
+  </ItemGroup>
+
 </Project>
