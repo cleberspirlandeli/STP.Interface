@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using STP.Business.Interfaces;
+using STP.Interface.Controllers.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,32 +10,25 @@ using System.Threading.Tasks;
 namespace STP.Interface.Controllers
 {
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [Route("[controller]")]
-    public class CalculaJurosController : ControllerBase
+    public class CalculaJurosController : BaseController
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<CalculaJurosController> _logger;
 
-        public CalculaJurosController(ILogger<CalculaJurosController> logger)
+        public CalculaJurosController(INotificador notificador,
+                                      ILogger<CalculaJurosController> logger)
+            : base(notificador)
         {
             _logger = logger;
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IActionResult Get()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+
+            return CustomResponse("ok");
         }
     }
 }
