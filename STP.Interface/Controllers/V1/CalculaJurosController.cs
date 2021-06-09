@@ -16,19 +16,23 @@ namespace STP.Interface.Controllers
     public class CalculaJurosController : BaseController
     {
         private readonly ILogger<CalculaJurosController> _logger;
+        private readonly ICalcularJurosApplicationService _calcularJurosAppService;
 
-        public CalculaJurosController(INotificador notificador,
-                                      ILogger<CalculaJurosController> logger)
+        public CalculaJurosController(
+                INotificador notificador,
+                ICalcularJurosApplicationService calcularJurosAppService,
+                ILogger<CalculaJurosController> logger)
             : base(notificador)
         {
             _logger = logger;
+            _calcularJurosAppService = calcularJurosAppService;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-
-            return CustomResponse("ok");
+            var result = await _calcularJurosAppService.CalcularJuros();
+            return CustomResponse(result);
         }
     }
 }
