@@ -1,22 +1,29 @@
-﻿using STP.Business.Interfaces;
+﻿using Newtonsoft.Json;
+using STP.Business.Interfaces;
 using STP.Business.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using STP.Common.Helpers.RestClientHelper.Interfaces;
 using System.Threading.Tasks;
 
 namespace STP.Business.ApplicationServices
 {
     public class CalcularJurosApplicationService : BaseApplicationService, ICalcularJurosApplicationService
     {
-        //private readonly IFornecedorRepository _fornecedorRepository;
+        private readonly IRestClientHelper _restClientHelper;
+        private readonly string _requestUri = "https://viacep.com.br/ws/14406012/json/";
 
-        public CalcularJurosApplicationService(INotificador notificador) : base(notificador) { }
+        public CalcularJurosApplicationService(
+                INotificador notificador,
+                IRestClientHelper restClientHelper
+            ) : base(notificador) 
+        {
+            _restClientHelper = restClientHelper;
+        }
 
         public async Task<CalcularJuros> CalcularJuros()
         {
-
+            
+            var result = await _restClientHelper.GetAsync(_requestUri);
+            var TaxaJuros = JsonConvert.DeserializeObject<TaxaJuros>(result);
 
             return new CalcularJuros
             {
