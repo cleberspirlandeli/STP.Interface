@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using STP.Business.ApplicationServices;
-using STP.Business.ApplicationServices.Services;
 using STP.Business.Interfaces;
-using STP.Business.Interfaces.Services;
 using STP.Business.Notificacoes;
 using STP.Common.Helpers.RestClientHelper;
 using STP.Common.Helpers.RestClientHelper.Interfaces;
@@ -21,10 +19,6 @@ namespace STP.Business.Configurations
 
             #region Application Services
             services.AddScoped<ICalcularJurosApplicationService, CalcularJurosApplicationService>();
-            #endregion
-
-            #region Services
-            services.AddScoped<ITaxaJurosService, TaxaJurosService>();
             #endregion
         }
     }
