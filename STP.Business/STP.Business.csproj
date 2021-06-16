@@ -7,11 +7,15 @@
 
   <ItemGroup>
     <Folder Include="Models\Validations\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="10.2.3" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\STP.Common\STP.Common.csproj" />
   </ItemGroup>
 
 </Project>
