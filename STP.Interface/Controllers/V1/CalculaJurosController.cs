@@ -30,32 +30,15 @@ namespace STP.Interface.Controllers
             _calcularJurosAppService = calcularJurosAppService;
         }
 
-
-        /* 
-            public class Dto
-            {
-                [FromRoute(Name = "")]
-                public Test Test { get; set; }
-
-                [FromBody]
-                public Sample Sample { get; set; }
-                public ApiVersion ApiVersion { get; set; }
-            }
-
-            [HttpGet("col1/{col1}/col2/{col2}/col3/{col3}")]
-            public async Task<IActionResult> Get([FromQuery]Dto dto)
-            {           
-                return Ok(dto);
-            }
-         */
         [HttpGet]
         public async Task<IActionResult> Get(CancellationToken cancellationToken)
         {
-            int? valorInicial = Int32.Parse(HttpContext.Request?.Query["valorInicial"]);
-            int? meses = Int32.Parse(HttpContext.Request?.Query["meses"]);
-            dynamic obj = 0;
+            Int32.TryParse(HttpContext.Request?.Query["valorInicial"].ToString(), out int valorInicial);
+            Int32.TryParse(HttpContext.Request?.Query["meses"].ToString(), out int meses);
 
-            var result = await _calcularJurosAppService.CalcularJuros(obj, cancellationToken);
+
+            var result = await _calcularJurosAppService.CalcularJuros(valorInicial, meses, cancellationToken);
+            _logger.LogInformation($"Nova consulta de crédito realizada ${DateTime.Now}");
             return CustomResponse(result);
         }
     }

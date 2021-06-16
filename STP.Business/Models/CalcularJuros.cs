@@ -15,6 +15,8 @@ namespace STP.Business.Models
         public int Tipo { get; set; }
         public string Descricao { get; set; }
 
+        public CalcularJuros() { }
+
         public CalcularJuros(double valorInicial, int tempo, double juros)
         {
             this.ValorInicial = valorInicial;

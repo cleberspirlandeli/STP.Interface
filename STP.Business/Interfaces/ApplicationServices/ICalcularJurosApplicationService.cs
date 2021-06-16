@@ -6,6 +6,6 @@ namespace STP.Business.Interfaces
 {
     public interface ICalcularJurosApplicationService
     {
-        Task<CalcularJuros> CalcularJuros(dynamic obj, CancellationToken cancellationToken);
+        Task<CalcularJuros> CalcularJuros(int? valorInicial, int? meses, CancellationToken cancellationToken);
     }
 }

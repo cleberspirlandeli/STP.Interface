@@ -20,19 +20,35 @@ namespace STP.Business.ApplicationServices
             _taxaJurosService = taxaJurosService;
         }
 
-        public async Task<CalcularJuros> CalcularJuros(dynamic obj, CancellationToken cancellationToken = default)
+        public async Task<CalcularJuros> CalcularJuros(int? valorInicial, int? meses, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            //int? valorInicial = (int?)obj?.valorInicial;
-            //int? meses = (int?)obj?.meses;
+            if (!ValidarRegras(valorInicial, meses)) return new CalcularJuros();
 
-            //var taxaJuros = await _taxaJurosService.GetTaxaJuros();
+            var taxaJuros = await _taxaJurosService.GetTaxaJuros();
 
-            var calcularJuros = new CalcularJuros(100, 5, 0.01);
+            var calcularJuros = new CalcularJuros((int)valorInicial, (int)meses, taxaJuros.Taxa);
             calcularJuros.CalcularTotalizador();
 
             return calcularJuros;
+        }
+
+        private bool ValidarRegras(int? valorInicial, int? meses)
+        {
+            var result = true;
+            if (!valorInicial.HasValue || valorInicial <= 0)
+            {
+                Notificar("Valor Inicial não corresponde ao formato desejado."); // _commonMessage
+                result = false;
+            }
+            if (!meses.HasValue || meses <= 0)
+            {
+                Notificar("Mês não corresponde ao formato desejado."); // _commonMessage
+                result = false;
+            }
+
+            return result;
         }
     }
 }
